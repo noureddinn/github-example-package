@@ -44,9 +44,9 @@ jobs:
       run: mvn release:rollback -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
-    - name: release in succes
 #       if: ${{ job.status == failure }}
-      uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      if: ${{ job.status == "failure" }}
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: false
