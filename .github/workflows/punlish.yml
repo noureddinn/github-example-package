@@ -1,0 +1,26 @@
+name: Noureddin 124
+on: 
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Realase version'     
+        required: true
+      tag:
+        description: 'tag'
+        required: true 
+      developmentVersion:
+        description: 'development Version (snapshot)'
+        required: true 
+
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Log level: $VERSION"
+          echo "Tags: $TAGS"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          VERSION: ${{ github.event.inputs.releaseVersion }}
+          TAGS: ${{ github.event.inputs.tag }}
+          ENVIRONMENT: ${{ github.event.inputs.developmentVersion }}
