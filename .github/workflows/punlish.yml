@@ -54,7 +54,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
     - name: Rollback in error
       if: ${{ failure() }}
-      run: mvn release:clean -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn release:rollback -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
     # - uses: "marvinpinto/action-automatic-releases@latest"
