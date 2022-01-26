@@ -12,15 +12,43 @@ on:
         description: 'development Version (snapshot)'
         required: true 
 
+# jobs:
+#   log-the-inputs:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - run: |
+#           echo "Log level: $VERSION"
+#           echo "Tags: $TAGS"
+#           echo "Environment: $ENVIRONMENT"
+#         env:
+#           VERSION: ${{ github.event.inputs.releaseVersion }}
+#           TAGS: ${{ github.event.inputs.tag }}
+#           ENVIRONMENT: ${{ github.event.inputs.developmentVersion }}
 jobs:
-  log-the-inputs:
+  build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - run: |
-          echo "Log level: $VERSION"
-          echo "Tags: $TAGS"
-          echo "Environment: $ENVIRONMENT"
-        env:
-          VERSION: ${{ github.event.inputs.releaseVersion }}
-          TAGS: ${{ github.event.inputs.tag }}
-          ENVIRONMENT: ${{ github.event.inputs.developmentVersion }}
+    - uses: actions/checkout@v2
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Publish to GitHub Packages Apache Maven
+      run: mvn release:prepare   -DreleaseVersion=$VERSION   -DdevelopmentVersion=1.0.4-SNAPSHOT   -Dtag=my-project-1.0.5 -Dresume=false
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+        VERSION: ${{ github.event.inputs.releaseVersion }}
+        TAGS: ${{ github.event.inputs.tag }}
+        ENVIRONMENT: ${{ github.event.inputs.developmentVersion }}
+    # - uses: "marvinpinto/action-automatic-releases@latest"
+    #   with:
+    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+    #     prerelease: false
