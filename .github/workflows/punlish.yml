@@ -26,9 +26,7 @@ on:
 #           ENVIRONMENT: ${{ github.event.inputs.developmentVersion }}
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
@@ -52,6 +50,11 @@ jobs:
         DEV_VERSION: ${{ github.event.inputs.developmentVersion }}
     - name: Publish to GitHub Packages Apache Maven
       run: mvn release:perform -s $GITHUB_WORKSPACE/settings.xml
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+    - name: Rollback in error
+      if: ${{ failure() }}
+      run: mvn release:clean -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
     # - uses: "marvinpinto/action-automatic-releases@latest"
