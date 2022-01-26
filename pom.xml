@@ -25,7 +25,7 @@
 
     <scm>
         <connection>scm:git:git://github.com/noureddinn/github-example-package.git</connection>
-        <developerConnection>scm:git:ssh://github.com/noureddinn/github-example-package.git
+        <developerConnection>scm:git:git://github.com/noureddinn/github-example-package.git
         </developerConnection>
         <url>https://github.com/noureddinn/github-example-package</url>
         <tag>my-project-1.0.1</tag>
