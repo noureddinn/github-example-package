@@ -46,7 +46,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
 #       if: ${{ job.status == failure }}
     - uses: "marvinpinto/action-automatic-releases@latest"
-      if: ${{ job.status == 'failure' }}
+      if: ${{ job.status == 'success' }}
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: false
