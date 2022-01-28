@@ -28,7 +28,7 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: config git 
-      run: git config --global user.name "NOUREDDIN"  && git config --global user.email "noureddin.souad@damanesign.ma"
+      run: git config --global user.name github-actions  && git config --global user.email github-actions@github.com
     - name: Prepare to GitHub Packages Apache Maven
       run: mvn release:prepare   -DreleaseVersion=$VERSION   -DdevelopmentVersion=$DEV_VERSION   -Dtag=$TAG -Dresume=false
       env:
