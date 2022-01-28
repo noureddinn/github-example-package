@@ -1,4 +1,4 @@
-name: Noureddin 124
+name: publich maven package to github
 on: 
   workflow_dispatch:
     inputs:
@@ -9,7 +9,7 @@ on:
         description: 'tag'
         required: true 
       developmentVersion:
-        description: 'development Version (snapshot)'
+        description: 'the next dev version (snapshot)'
         required: true 
 jobs:
   build:
@@ -22,7 +22,6 @@ jobs:
         java-version: 1.8
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
-        ref: master
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
@@ -45,7 +44,7 @@ jobs:
       run: mvn release:rollback -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
-#       if: ${{ job.status == failure }}
+#       GITHUB REPO CREATE RELEASE IN SUCCESS JOB CASE
     - uses: "marvinpinto/action-automatic-releases@latest"
       if: ${{ job.status == 'success' }}
       with:
