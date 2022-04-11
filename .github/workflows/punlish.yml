@@ -42,7 +42,7 @@ jobs:
     - name: pubfdfdfdfd
       run:  git checkout tags/${{ github.event.inputs.tag }}  
     - name: maven packaging
-      run:  mvn papckage
+      run:  mvn package
     - name: list target files
       run: cd $GITHUB_WORKSPACE/target  &&  ls
     - name: push to s3
