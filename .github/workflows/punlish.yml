@@ -29,8 +29,9 @@ jobs:
     - name: config git 
       run: git config --global user.name github-actions  && git config --global user.email github-actions@github.com
     - name: Prepare to GitHub Packages Apache Maven
-      run: mvn release:prepare release:perform   -DreleaseVersion=$VERSION   -DdevelopmentVersion=$DEV_VERSION   -Dtag=$TAG -Dresume=false
+      run: mvn release:prepare release:perform  -s $GITHUB_WORKSPACE/settings.xml -DreleaseVersion=$VERSION   -DdevelopmentVersion=$DEV_VERSION   -Dtag=$TAG -Dresume=false
       env:
+        GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
         GITHUB_TOKEN: ${{ github.token }}
         VERSION: ${{ github.event.inputs.releaseVersion }}
         TAG: ${{ github.event.inputs.tag }}
