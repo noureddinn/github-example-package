@@ -41,8 +41,10 @@ jobs:
     #     GITHUB_TOKEN: ${{ github.token }}
     - name: pubfdfdfdfd
       run:  git checkout tags/${{ github.event.inputs.tag }}  
-    - name: maven packaging
-      run:  mvn package
+    - name: Publish package
+      run: mvn --batch-mode deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
     - name: list target files
       run: cd $GITHUB_WORKSPACE/target  &&  ls
     - name: push to s3
