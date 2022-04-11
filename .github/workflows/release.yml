@@ -1,9 +1,7 @@
-name: publish package to s3
-on: 
-  registry_package:
-    action:
-      - published
-      - updated
+name: relaese s3
+on:
+  release:
+    types: [published]
 jobs:
   build:
     runs-on: ubuntu-latest
